@@ -17,7 +17,18 @@ app.get('/',(req,res)=>{
         res.render("index",{files:files})
         
     })
-})
+});
+app.get('/file/:fileName',(req,res)=>{
+    fs.readFile(`./files/${req.params.fileName}`,"utf-8", function(err,fileData){
+        res.render('show',{fileName: req.params.fileName,fileData: fileData})
+    })    
+});
+
+
+
+
+
+
 app.post('/create',(req,res)=>{
     fs.writeFile(`./files/${req.body.title.split(' ').join('')}.txt`, req.body.details,(err)=>{
         res.redirect("/")
